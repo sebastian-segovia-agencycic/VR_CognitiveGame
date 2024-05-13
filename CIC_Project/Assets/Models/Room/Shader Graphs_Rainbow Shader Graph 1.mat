@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Shader Graphs_Rainbow Shader Graph
+  m_Name: Shader Graphs_Rainbow Shader Graph 1
   m_Shader: {fileID: -6465566751694194690, guid: 3cc2fdca5bd91594bae6f75a0d072b93, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -35,7 +35,7 @@ Material:
     - _ScrollSpeed: 1
     m_Colors:
     - _FresnelColor: {r: 0, g: 0, b: 0, a: 0}
-    - _HologramTiling: {r: 0.77, g: 9.67, b: 0, a: 0}
+    - _HologramTiling: {r: -24.31, g: 9.67, b: 0, a: 0}
     - _MainColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &618811538513445864

@@ -1,25 +1,28 @@
-
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
-using Zinnia.Utility;
 
 public class GeneratorGame : MonoBehaviour
 {
     public static GeneratorGame Instance;
+
     public int randomColor, randomForm, randomCount;
-    public int counterAttempts = 3;
+    
+    //Difficult
+    public int minutesRemaining = 5,counterAttempts = 3;
+    
     [SerializeField] private GameObject timerPanel;
     [SerializeField] private TMP_Text readyText, regresiveCounterText, counterAtempsText;
     [SerializeField] private Image imageForm;
     [SerializeField] private Color colorForm;
     [SerializeField] private List<Sprite> sprites = new List<Sprite>();
     [SerializeField] private List<Basket> basketList = new List<Basket>();
+
     private AudioSource audioSource;
     private float countdownTimer, countdownDuration;
-    private bool paused = true, canWin = true;
+    private bool paused = true;
 
     private void Awake()
     {
@@ -31,7 +34,7 @@ public class GeneratorGame : MonoBehaviour
     {
         imageForm.gameObject.SetActive(false);
         timerPanel.SetActive(false);
-        countdownDuration = 60 * 5;
+        countdownDuration = 60 * minutesRemaining;
         countdownTimer = countdownDuration;
     }
 
@@ -70,6 +73,11 @@ public class GeneratorGame : MonoBehaviour
                 countdownTimer -= Time.deltaTime;
                 UpdateCountdownText(countdownTimer);
                 Attempts();
+                if (countdownTimer <= 0.0f)
+                {
+                    regresiveCounterText.text = string.Format("{0:00}:{1:00}:{2:000}", 0f, 0f, 0f);
+                    paused = true;
+                }
             }
             yield return null;
         }
@@ -123,6 +131,7 @@ public class GeneratorGame : MonoBehaviour
             basketList[1].formColor = (ColorType)this.randomColor;
             basketList[1].formType = (FormType)randomForm;
             basketList[1].countWinForms = randomCount;
+
             return Color.blue;
         }  
         else

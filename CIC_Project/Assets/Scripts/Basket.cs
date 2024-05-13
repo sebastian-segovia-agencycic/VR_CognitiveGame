@@ -10,12 +10,13 @@ public class Basket : MonoBehaviour
     public FormType formType;
 
     public ColorType basketColor;
-    
-    private TMP_Text counterFormsText;
+    InteractableForm interactable;
+    public TMP_Text counterFormsText;
     public GameObject canvas;
-    public int countWinForms;
+    public int countWinForms, currentCountWin;
 
     public bool basketSelected;
+
     void Start()
     {
         
@@ -28,16 +29,18 @@ public class Basket : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        GameObject target = other.gameObject;
+        interactable = target.GetComponentInParent<InteractableForm>();
+
+        if (!interactable) return;
+
         if (basketSelected)
         {
-            GameObject target = other.gameObject;
-            InteractableForm interactable = target.GetComponentInParent<InteractableForm>();
-            if (!interactable) return;
             if (interactable.formType == formType && interactable.formColor == formColor)
             {
-                countWinForms++;
-                counterFormsText.text = countWinForms.ToString();
-                if (countWinForms == GeneratorGame.Instance.randomCount)
+                currentCountWin++;
+                counterFormsText.text = currentCountWin.ToString();
+                if (currentCountWin == GeneratorGame.Instance.randomCount)
                 {
 
                 }
@@ -45,14 +48,14 @@ public class Basket : MonoBehaviour
             else
             {
                 GeneratorGame.Instance.counterAttempts--;
-                countWinForms--;
+                currentCountWin--;
             }
         }
         else
         {
             GeneratorGame.Instance.counterAttempts--;
-            countWinForms--;
-            counterFormsText.text = countWinForms.ToString();
+            currentCountWin--;
+            counterFormsText.text = currentCountWin.ToString();
         }
     }
 
@@ -61,15 +64,15 @@ public class Basket : MonoBehaviour
         if (basketSelected)
         {
             GameObject target = other.gameObject;
-            InteractableForm interactable = target.GetComponentInParent<InteractableForm>();
+            interactable = target.GetComponentInParent<InteractableForm>();
             if (!interactable) return;
             if (interactable.formType == formType && interactable.formColor == formColor)
             {
-                countWinForms--;
+                currentCountWin--;
             }
             else
             {
-                countWinForms++;
+                currentCountWin++;
             }
         }
         else
