@@ -5001,6 +5001,7 @@ GameObject:
   - component: {fileID: 377576196554859271}
   - component: {fileID: 5431764186161734031}
   - component: {fileID: 5458728956932141881}
+  - component: {fileID: 9038839113527251492}
   m_Layer: 0
   m_Name: Interactions.Interactable_Cube
   m_TagString: Untagged
@@ -5015,7 +5016,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3674651716993291041}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 4.012, y: -0.662, z: -0.096}
   m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_ConstrainProportionsScale: 1
@@ -5169,6 +5170,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58d6cb68905534b4d8baf13b96b36cd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &9038839113527251492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3674651716993291041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74e3e4bf7cd7f574ba0400170b455e50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  formType: 0
+  formColor: 0
+  color: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &3739456505794376914
 GameObject:
   m_ObjectHideFlags: 0
@@ -13287,7 +13303,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 50
+  m_VersionIndex: 65
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []

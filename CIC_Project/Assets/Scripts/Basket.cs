@@ -6,11 +6,16 @@ using UnityEngine;
 public class Basket : MonoBehaviour
 {
     //InteratableInfo
-    private InteractableForm currentWinInteractable;    
-    public ColorType basketColor;
-    private float countWinForms;
-    private TMP_Text counterPoints;
+    public ColorType formColor;
+    public FormType formType;
 
+    public ColorType basketColor;
+    
+    private TMP_Text counterFormsText;
+    public GameObject canvas;
+    public int countWinForms;
+
+    public bool basketSelected;
     void Start()
     {
         
@@ -21,32 +26,56 @@ public class Basket : MonoBehaviour
         
     }
 
-    public void UpdateWinConditions()
-    {
-        currentWinInteractable = GeneratorGame.Instance.winInteractableForm;
-    }
-
     private void OnTriggerEnter(Collider other)
     {
-        GameObject target = other.gameObject;
-        InteractableForm interactable = target.GetComponent<InteractableForm>();
-
-        if (interactable.formType == currentWinInteractable.formType && interactable.colorType == currentWinInteractable.colorType)
+        if (basketSelected)
         {
-            countWinForms++;
-            if (countWinForms == GeneratorGame.Instance.countRamdon)
+            GameObject target = other.gameObject;
+            InteractableForm interactable = target.GetComponentInParent<InteractableForm>();
+            if (!interactable) return;
+            if (interactable.formType == formType && interactable.formColor == formColor)
             {
+                countWinForms++;
+                counterFormsText.text = countWinForms.ToString();
+                if (countWinForms == GeneratorGame.Instance.randomCount)
+                {
 
+                }
+            }
+            else
+            {
+                GeneratorGame.Instance.counterAttempts--;
+                countWinForms--;
             }
         }
         else
         {
+            GeneratorGame.Instance.counterAttempts--;
             countWinForms--;
+            counterFormsText.text = countWinForms.ToString();
         }
     }
 
-    private void CalculateWin()
+    private void OnTriggerExit(Collider other)
     {
+        if (basketSelected)
+        {
+            GameObject target = other.gameObject;
+            InteractableForm interactable = target.GetComponentInParent<InteractableForm>();
+            if (!interactable) return;
+            if (interactable.formType == formType && interactable.formColor == formColor)
+            {
+                countWinForms--;
+            }
+            else
+            {
+                countWinForms++;
+            }
+        }
+        else
+        {
+            
+        }
 
     }
 }

@@ -13953,7 +13953,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 23
+  m_VersionIndex: 26
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -14034,8 +14034,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 1
-  outlineColor: {r: 1, g: 1, b: 1, a: 1}
-  outlineWidth: 4.71
+  outlineColor: {r: 0.035793543, g: 1, b: 0, a: 1}
+  outlineWidth: 10
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
@@ -19100,6 +19100,7 @@ GameObject:
   - component: {fileID: 7248464078672144015}
   - component: {fileID: 3083660210200306695}
   - component: {fileID: 3056696410602813105}
+  - component: {fileID: 8039223803893379991}
   m_Layer: 0
   m_Name: Interactions.Interactable_Sphere Variant Variant
   m_TagString: Untagged
@@ -19114,7 +19115,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6004459818529527465}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3.084, y: -0.6899979, z: -2.183}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
@@ -19268,6 +19269,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58d6cb68905534b4d8baf13b96b36cd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8039223803893379991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6004459818529527465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74e3e4bf7cd7f574ba0400170b455e50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  formType: 2
+  colorType: 2
+  color: {r: 0, g: 0, b: 0, a: 0}
+  meshRenderer: {fileID: 2537750212366856563}
 --- !u!1 &6081567513099034832
 GameObject:
   m_ObjectHideFlags: 0

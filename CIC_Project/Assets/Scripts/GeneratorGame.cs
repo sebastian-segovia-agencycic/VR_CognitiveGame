@@ -9,28 +9,28 @@ using Zinnia.Utility;
 public class GeneratorGame : MonoBehaviour
 {
     public static GeneratorGame Instance;
-    public InteractableForm winInteractableForm;
-    public int ramdonColor, ramdonForm, countRamdon;
-
-    [SerializeField] private TMP_Text readyText, regresiveCounterText;
+    public int randomColor, randomForm, randomCount;
+    public int counterAttempts = 3;
+    [SerializeField] private GameObject timerPanel;
+    [SerializeField] private TMP_Text readyText, regresiveCounterText, counterAtempsText;
     [SerializeField] private Image imageForm;
     [SerializeField] private Color colorForm;
     [SerializeField] private List<Sprite> sprites = new List<Sprite>();
-    [SerializeField] private List<Basket> basketList = new List<Basket>(); 
-
+    [SerializeField] private List<Basket> basketList = new List<Basket>();
     private AudioSource audioSource;
     private float countdownTimer, countdownDuration;
-    private bool paused = true;
+    private bool paused = true, canWin = true;
 
     private void Awake()
     {
         Instance = this;
-        imageForm.gameObject.SetActive(false);
         ResetUI();
     }
 
     private void ResetUI()
     {
+        imageForm.gameObject.SetActive(false);
+        timerPanel.SetActive(false);
         countdownDuration = 60 * 5;
         countdownTimer = countdownDuration;
     }
@@ -43,34 +43,41 @@ public class GeneratorGame : MonoBehaviour
 
     private void Update()
     {
+        if (counterAttempts <= 0)
+        {
 
+        }
     }
 
     public void InitGaneratedGame()
     {
-        ramdonColor = Random.Range((int)ColorType.Yellow, (int)ColorType.Red);
-        ramdonForm = Random.Range((int)FormType.Cube, (int)FormType.Sphere);
-        countRamdon = Random.Range(1, 9);
-        imageForm.sprite = SetForm(ramdonForm);
-        colorForm = SetColor(ramdonColor);
+        randomColor = Random.Range((int)ColorType.Yellow, (int)ColorType.Red);
+        randomForm = Random.Range((int)FormType.Cube, (int)FormType.Sphere);
+        randomCount = Random.Range(3, 10);
+        imageForm.sprite = SetForm(randomForm);
+        colorForm = SetColor(randomColor);
         imageForm.color = colorForm;
-       
-        StartReadyRegresiveCount();
+        
+        StartCoroutine(StartReadyRegresiveCount());
     }
 
     IEnumerator StartCountdown()
     {
-        float timer = countdownDuration;
-
         while (true) // Mantenemos la corrutina ejecutándose para siempre
         {
             if (!paused)
             {
-                timer -= Time.deltaTime;
-                UpdateCountdownText(timer);
+                countdownTimer -= Time.deltaTime;
+                UpdateCountdownText(countdownTimer);
+                Attempts();
             }
             yield return null;
         }
+    }
+
+    private void Attempts()
+    {
+        
     }
 
     void UpdateCountdownText(float timeRemaining)
@@ -96,11 +103,40 @@ public class GeneratorGame : MonoBehaviour
     private Color SetColor(int ramdonColor)
     {
         if (ramdonColor == (int)ColorType.Yellow)
+        {
+            basketList[0].basketSelected = true;
+            basketList[1].basketSelected = false;
+            basketList[2].basketSelected = false;
+
+            basketList[0].formColor = (ColorType)this.randomColor;
+            basketList[0].formType = (FormType)randomForm;
+            basketList[0].countWinForms = randomCount;
+
             return Color.yellow;
+        }
         else if (ramdonColor == (int)ColorType.Blue)
+        {
+            basketList[0].basketSelected = false;
+            basketList[1].basketSelected = true;
+            basketList[2].basketSelected = false;
+
+            basketList[1].formColor = (ColorType)this.randomColor;
+            basketList[1].formType = (FormType)randomForm;
+            basketList[1].countWinForms = randomCount;
             return Color.blue;
+        }  
         else
+        {
+            basketList[0].basketSelected = false;
+            basketList[1].basketSelected = false;
+            basketList[2].basketSelected = true;
+
+            basketList[2].formColor = (ColorType)this.randomColor;
+            basketList[2].formType = (FormType)randomForm;
+            basketList[2].countWinForms = randomCount;
+
             return Color.red;
+        }
     }
 
     private IEnumerator StartReadyRegresiveCount()
@@ -116,9 +152,10 @@ public class GeneratorGame : MonoBehaviour
         readyText.text = "¡Adelante!";
         yield return new WaitForSeconds(1f);
 
-        paused = true;
+        paused = false;
+        timerPanel.SetActive(true);
         imageForm.gameObject.SetActive(true);
-        readyText.text = countRamdon.ToString();
+        readyText.text = randomCount.ToString();
     }
 
 }

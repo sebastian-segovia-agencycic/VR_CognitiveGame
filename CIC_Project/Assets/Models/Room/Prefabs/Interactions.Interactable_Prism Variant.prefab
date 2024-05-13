@@ -3632,6 +3632,7 @@ GameObject:
   - component: {fileID: 1379636792651469015}
   - component: {fileID: 6735589991258034783}
   - component: {fileID: 6762527326859378921}
+  - component: {fileID: 5989028180817488407}
   m_Layer: 0
   m_Name: Interactions.Interactable_Prism Variant
   m_TagString: Untagged
@@ -3646,7 +3647,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2659062849819468017}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3.367, y: -0.6899975, z: -1.280121}
   m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_ConstrainProportionsScale: 1
@@ -3800,6 +3801,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58d6cb68905534b4d8baf13b96b36cd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5989028180817488407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2659062849819468017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74e3e4bf7cd7f574ba0400170b455e50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  formType: 1
+  colorType: 1
+  color: {r: 0, g: 0, b: 0, a: 0}
+  meshRenderer: {fileID: 7498697585173440649}
 --- !u!1 &2692609429501040394
 GameObject:
   m_ObjectHideFlags: 0
@@ -11397,6 +11414,7 @@ GameObject:
   - component: {fileID: 7498697585173440660}
   - component: {fileID: 7498697585173440659}
   - component: {fileID: 7498697585173440658}
+  - component: {fileID: 1732194784}
   m_Layer: 0
   m_Name: Prism (2)
   m_TagString: Untagged
@@ -11587,7 +11605,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 35
+  m_VersionIndex: 41
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -11720,6 +11738,24 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.05271387, y: 0.115538, z: 0.07040322}
   m_Center: {x: 0.4995587, y: 0.88582855, z: 0.49951655}
+--- !u!114 &1732194784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7498697585173440656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 1
+  outlineColor: {r: 0.035793543, g: 1, b: 0, a: 1}
+  outlineWidth: 10
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &7546074162481195080
 GameObject:
   m_ObjectHideFlags: 0

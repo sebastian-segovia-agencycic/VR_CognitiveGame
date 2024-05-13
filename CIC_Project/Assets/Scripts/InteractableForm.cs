@@ -8,17 +8,25 @@ public enum ColorType { Yellow, Blue, Red }
 public class InteractableForm : MonoBehaviour
 {
     public FormType formType;
-    public ColorType colorType;
+    public ColorType formColor;
     public Color color;
-    public MeshRenderer meshRenderer;
+    private MeshRenderer meshRenderer;
 
     void Start()
     {
+        color = SetColor();
+        meshRenderer = GetComponentInChildren<MeshRenderer>();
         meshRenderer.material.color = color;
     }
 
-    void Update()
+    private Color SetColor()
     {
-                
+        if (formColor == (int)ColorType.Yellow)
+            return Color.yellow;
+        else if ((int)formColor == (int)ColorType.Blue)
+            return Color.blue;
+        else
+            return Color.red;
     }
+
 }

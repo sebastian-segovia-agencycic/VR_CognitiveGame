@@ -4776,7 +4776,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 35
+  m_VersionIndex: 50
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -11048,6 +11048,7 @@ GameObject:
   - component: {fileID: 7004701796819459837}
   - component: {fileID: 3416358654728117365}
   - component: {fileID: 3443448006411112131}
+  - component: {fileID: 8510417830191254161}
   m_Layer: 0
   m_Name: Interactions.Interactable_Prism
   m_TagString: Untagged
@@ -11062,7 +11063,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6266236490302844635}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3.3830001, y: -0.662, z: -0.096000016}
   m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_ConstrainProportionsScale: 1
@@ -11216,6 +11217,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58d6cb68905534b4d8baf13b96b36cd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8510417830191254161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6266236490302844635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74e3e4bf7cd7f574ba0400170b455e50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  formType: 1
+  formColor: 0
+  color: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &6291200419678705952
 GameObject:
   m_ObjectHideFlags: 0
