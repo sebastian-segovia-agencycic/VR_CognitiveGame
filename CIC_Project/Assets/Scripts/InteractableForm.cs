@@ -21,9 +21,9 @@ public class InteractableForm : MonoBehaviour
 
     private Color SetColor()
     {
-        if (formColor == (int)ColorType.Yellow)
+        if (formColor == ColorType.Yellow)
             return Color.yellow;
-        else if ((int)formColor == (int)ColorType.Blue)
+        else if (formColor == ColorType.Blue)
             return Color.blue;
         else
             return Color.red;

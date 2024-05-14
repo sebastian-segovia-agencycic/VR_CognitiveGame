@@ -8,78 +8,45 @@ public class Basket : MonoBehaviour
     //InteratableInfo
     public ColorType formColor;
     public FormType formType;
-
     public ColorType basketColor;
-    InteractableForm interactable;
     public TMP_Text counterFormsText;
     public GameObject canvas;
-    public int countWinForms, currentCountWin;
-
-    public bool basketSelected;
-
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
+    public bool basketSelected, activated;
 
     private void OnTriggerEnter(Collider other)
     {
+        if (!activated) return;
+
         GameObject target = other.gameObject;
-        interactable = target.GetComponentInParent<InteractableForm>();
+        InteractableForm interactable = target.GetComponentInParent<InteractableForm>();
 
         if (!interactable) return;
 
         if (basketSelected)
         {
             if (interactable.formType == formType && interactable.formColor == formColor)
-            {
-                currentCountWin++;
-                counterFormsText.text = currentCountWin.ToString();
-                if (currentCountWin == GeneratorGame.Instance.randomCount)
-                {
-
-                }
-            }
+                GeneratorGame.Instance.currentCountWin++;
             else
             {
                 GeneratorGame.Instance.counterAttempts--;
-                currentCountWin--;
+                GeneratorGame.Instance.currentCountWin--;
             }
         }
         else
         {
             GeneratorGame.Instance.counterAttempts--;
-            currentCountWin--;
-            counterFormsText.text = currentCountWin.ToString();
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (basketSelected)
-        {
-            GameObject target = other.gameObject;
-            interactable = target.GetComponentInParent<InteractableForm>();
-            if (!interactable) return;
-            if (interactable.formType == formType && interactable.formColor == formColor)
-            {
-                currentCountWin--;
-            }
-            else
-            {
-                currentCountWin++;
-            }
-        }
-        else
-        {
+            GeneratorGame.Instance.currentCountWin--;
             
         }
+        GeneratorGame.Instance.counterAtempsText.text = GeneratorGame.Instance.counterAttempts.ToString();
+        counterFormsText.text = GeneratorGame.Instance.currentCountWin.ToString();
+        StartCoroutine(ReturnInteractableToPool(target));
+    }
 
+    private IEnumerator ReturnInteractableToPool(GameObject obj)
+    {
+        yield return new WaitForSeconds(3f);
+        Spawner.ReturnObjectToPool(obj);
     }
 }
 

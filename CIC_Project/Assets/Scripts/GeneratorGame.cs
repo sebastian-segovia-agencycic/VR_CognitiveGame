@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -8,18 +9,22 @@ public class GeneratorGame : MonoBehaviour
 {
     public static GeneratorGame Instance;
 
-    public int randomColor, randomForm, randomCount;
+    public int randomColor, randomForm, randomCount, currentCountWin;
+    public int minutesRemaining = 5, counterAttempts = 3;
     
-    //Difficult
-    public int minutesRemaining = 5,counterAttempts = 3;
+    [SerializeField] private GameObject gamePanel, timerPanel, losePanel, winPanel, buttonMenu, buttonResume, counterCanvas;
     
-    [SerializeField] private GameObject timerPanel;
-    [SerializeField] private TMP_Text readyText, regresiveCounterText, counterAtempsText;
+    [SerializeField] private TMP_Text readyText, regresiveCounterText;
+    public TMP_Text counterAtempsText;
     [SerializeField] private Image imageForm;
     [SerializeField] private Color colorForm;
     [SerializeField] private List<Sprite> sprites = new List<Sprite>();
     [SerializeField] private List<Basket> basketList = new List<Basket>();
 
+    [SerializeField] private List<ParticleSystem> winPSList = new List<ParticleSystem>();
+    [SerializeField] private List<ParticleSystem> losePSList = new List<ParticleSystem>();
+
+    public InteractableButton button;
     private AudioSource audioSource;
     private float countdownTimer, countdownDuration;
     private bool paused = true;
@@ -32,10 +37,18 @@ public class GeneratorGame : MonoBehaviour
 
     private void ResetUI()
     {
+        buttonMenu.SetActive(false);
+        buttonResume.SetActive(true);
         imageForm.gameObject.SetActive(false);
         timerPanel.SetActive(false);
+        gamePanel.SetActive(false);
+        losePanel.SetActive(false);
+        counterCanvas.SetActive(false);
+        winPanel.SetActive(false);
+        button.doOnce = false;
         countdownDuration = 60 * minutesRemaining;
         countdownTimer = countdownDuration;
+        counterAtempsText.text = counterAttempts.ToString();
     }
 
     private void Start()
@@ -46,10 +59,15 @@ public class GeneratorGame : MonoBehaviour
 
     private void Update()
     {
-        if (counterAttempts <= 0)
-        {
 
-        }
+    }
+
+    public void CalculateFinalGame()
+    {
+        if (randomCount == currentCountWin)
+            GoodEndGame();
+        else
+            BadEndGame();
     }
 
     public void InitGaneratedGame()
@@ -72,10 +90,11 @@ public class GeneratorGame : MonoBehaviour
             {
                 countdownTimer -= Time.deltaTime;
                 UpdateCountdownText(countdownTimer);
-                Attempts();
                 if (countdownTimer <= 0.0f)
                 {
                     regresiveCounterText.text = string.Format("{0:00}:{1:00}:{2:000}", 0f, 0f, 0f);
+                    BadEndGame();
+
                     paused = true;
                 }
             }
@@ -83,10 +102,30 @@ public class GeneratorGame : MonoBehaviour
         }
     }
 
-    private void Attempts()
+    public void BadEndGame()
     {
-        
+        buttonMenu.SetActive(true);
+        buttonResume.SetActive(false);
+        losePanel.SetActive(true);
+        gamePanel.SetActive(false);
+        counterCanvas.SetActive(false);
+        basketList[0].activated = false;
+        basketList[1].activated = false;
+        basketList[2].activated = false;
     }
+
+
+    public void GoodEndGame()
+    {
+        winPanel.SetActive(true);
+        gamePanel.SetActive(false);
+        basketList[0].activated = false;
+        basketList[1].activated = false;
+        basketList[2].activated = false;
+        foreach (var item in winPSList)
+            item.Play();
+    }
+
 
     void UpdateCountdownText(float timeRemaining)
     {
@@ -118,7 +157,6 @@ public class GeneratorGame : MonoBehaviour
 
             basketList[0].formColor = (ColorType)this.randomColor;
             basketList[0].formType = (FormType)randomForm;
-            basketList[0].countWinForms = randomCount;
 
             return Color.yellow;
         }
@@ -130,19 +168,17 @@ public class GeneratorGame : MonoBehaviour
 
             basketList[1].formColor = (ColorType)this.randomColor;
             basketList[1].formType = (FormType)randomForm;
-            basketList[1].countWinForms = randomCount;
 
             return Color.blue;
         }  
         else
-        {
+        { 
             basketList[0].basketSelected = false;
             basketList[1].basketSelected = false;
             basketList[2].basketSelected = true;
 
             basketList[2].formColor = (ColorType)this.randomColor;
             basketList[2].formType = (FormType)randomForm;
-            basketList[2].countWinForms = randomCount;
 
             return Color.red;
         }
@@ -165,6 +201,22 @@ public class GeneratorGame : MonoBehaviour
         timerPanel.SetActive(true);
         imageForm.gameObject.SetActive(true);
         readyText.text = randomCount.ToString();
+
+        basketList[0].activated = true;
+        basketList[1].activated = true;
+        basketList[2].activated = true;
+        counterCanvas.SetActive(true);
+        button.doOnce = true;
     }
 
+
+    public void ExitApplication()
+    {
+        Application.Quit();
+    }
+
+    public void RestartApplication()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
 }
