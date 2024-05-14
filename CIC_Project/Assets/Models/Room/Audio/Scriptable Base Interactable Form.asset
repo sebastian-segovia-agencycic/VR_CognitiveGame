@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65bb08a33e9188145b0d7824d3d580c6, type: 3}
+  m_Name: Scriptable Base Interactable Form
+  m_EditorClassIdentifier: 
+  clips:
+  - {fileID: 8300000, guid: edde58c2007061340b04b9e263786021, type: 3}
+  - {fileID: 8300000, guid: 5fd04304e5483de45affe7552119cd35, type: 3}

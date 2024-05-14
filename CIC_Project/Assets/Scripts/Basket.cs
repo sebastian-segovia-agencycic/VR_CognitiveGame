@@ -43,13 +43,14 @@ public class Basket : MonoBehaviour
         counterFormsText.text = GeneratorGame.Instance.currentCountWin.ToString();
         GameObject fatherInteractor = target.transform.parent.gameObject;
         fatherInteractor = fatherInteractor.transform.parent.gameObject;
-        StartCoroutine(ReturnInteractableToPool(fatherInteractor));
+        StartCoroutine(ReturnInteractableToPool(fatherInteractor, interactable));
     }
 
-    private IEnumerator ReturnInteractableToPool(GameObject obj)
+    private IEnumerator ReturnInteractableToPool(GameObject obj, InteractableForm interactable)
     {
         yield return new WaitForSeconds(3f);
         Spawner.ReturnObjectToPool(obj);
+        interactable.canUse = true;
     }
 }
 

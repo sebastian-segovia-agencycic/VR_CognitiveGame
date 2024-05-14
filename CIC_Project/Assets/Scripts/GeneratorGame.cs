@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime;
 
 public class GeneratorGame : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class GeneratorGame : MonoBehaviour
     public int randomColor, randomForm, randomCount, currentCountWin;
     public int minutesRemaining = 5, currentCounterAttempts, counterAttempts = 3;
     
-    [SerializeField] private GameObject gamePanel, timerPanel, losePanel, winPanel, buttonMenu, buttonResume, counterCanvas;
+    [SerializeField] private GameObject gamePanel, timerPanel, losePanel, winPanel, buttonRestart, buttonMenu, buttonResume, counterCanvas;
     
     [SerializeField] private TMP_Text readyText, regresiveCounterText;
     public TMP_Text counterAtempsText;
@@ -25,26 +26,31 @@ public class GeneratorGame : MonoBehaviour
     [SerializeField] private List<ParticleSystem> losePSList = new List<ParticleSystem>();
 
     public InteractableButton button;
-    private AudioSource audioSource;
+    public AudioSource audioSource;
+    public ScriptableBaseInteractable baseInteractable;
     private float countdownTimer, countdownDuration;
     private bool paused = true;
 
     private void Awake()
     {
         Instance = this;
+        gamePanel.SetActive(false);
+        timerPanel.SetActive(false);
         ResetGame();
     }
 
     public void ResetGame()
     {
+        paused = true;
         buttonMenu.SetActive(false);
         buttonResume.SetActive(true);
         imageForm.gameObject.SetActive(false);
-        timerPanel.SetActive(false);
         gamePanel.SetActive(false);
+        timerPanel.SetActive(false);
         losePanel.SetActive(false);
         counterCanvas.SetActive(false);
         winPanel.SetActive(false);
+        buttonRestart.SetActive(false);
         button.doOnce = false;
         currentCountWin = 0;
         currentCounterAttempts = counterAttempts;
@@ -54,9 +60,49 @@ public class GeneratorGame : MonoBehaviour
         basketList[0].counterFormsText.text = currentCountWin.ToString();
     }
 
+    public void FinalResetGame()
+    {
+        paused = true;
+        buttonMenu.SetActive(false);
+        buttonResume.SetActive(true);
+        imageForm.gameObject.SetActive(false);
+        gamePanel.SetActive(true);
+        timerPanel.SetActive(false);
+        losePanel.SetActive(false);
+        counterCanvas.SetActive(false);
+        winPanel.SetActive(false);
+        buttonRestart.SetActive(false);
+        button.doOnce = false;
+        currentCountWin = 0;
+        currentCounterAttempts = counterAttempts;
+        countdownDuration = 60 * minutesRemaining;
+        countdownTimer = countdownDuration;
+        counterAtempsText.text = currentCounterAttempts.ToString();
+        basketList[0].counterFormsText.text = currentCountWin.ToString();
+        InitGaneratedGame();
+    }
+    public void FinalResetGame1()
+    {
+        paused = true;
+        buttonMenu.SetActive(false);
+        buttonResume.SetActive(true);
+        imageForm.gameObject.SetActive(false);
+        gamePanel.SetActive(true);
+        timerPanel.SetActive(false);
+        losePanel.SetActive(false);
+        counterCanvas.SetActive(false);
+        winPanel.SetActive(false);
+        buttonRestart.SetActive(false);
+        button.doOnce = false;
+        currentCountWin = 0;
+        currentCounterAttempts = counterAttempts;
+        countdownDuration = 60 * minutesRemaining;
+        countdownTimer = countdownDuration;
+        counterAtempsText.text = currentCounterAttempts.ToString();
+        basketList[0].counterFormsText.text = currentCountWin.ToString();
+    }
     private void Start()
     {
-        audioSource = GetComponent<AudioSource>();
         StartCoroutine(StartCountdown());
     }
 
@@ -86,7 +132,6 @@ public class GeneratorGame : MonoBehaviour
         imageForm.sprite = SetForm(randomForm);
         colorForm = SetColor(randomColor);
         imageForm.color = colorForm;
-        
         StartCoroutine(StartReadyRegresiveCount());
     }
 
@@ -112,6 +157,8 @@ public class GeneratorGame : MonoBehaviour
 
     public void BadEndGame()
     {
+        paused = true;
+        audioSource.Stop();
         buttonMenu.SetActive(true);
         buttonResume.SetActive(false);
         losePanel.SetActive(true);
@@ -120,11 +167,13 @@ public class GeneratorGame : MonoBehaviour
         basketList[0].activated = false;
         basketList[1].activated = false;
         basketList[2].activated = false;
+        audioSource.PlayOneShot(baseInteractable.clips[1]);
     }
-
 
     public void GoodEndGame()
     {
+        paused = true;
+        audioSource.Stop();
         winPanel.SetActive(true);
         gamePanel.SetActive(false);
         basketList[0].activated = false;
@@ -132,8 +181,8 @@ public class GeneratorGame : MonoBehaviour
         basketList[2].activated = false;
         foreach (var item in winPSList)
             item.Play();
+        audioSource.PlayOneShot(baseInteractable.clips[0]);
     }
-
 
     void UpdateCountdownText(float timeRemaining)
     {
@@ -195,28 +244,37 @@ public class GeneratorGame : MonoBehaviour
     private IEnumerator StartReadyRegresiveCount()
     {
         readyText.text = "¿Estas Listo?";
+        audioSource.PlayOneShot(baseInteractable.clips[2]);
         yield return new WaitForSeconds(3f);
         readyText.text = "3";
+        audioSource.PlayOneShot(baseInteractable.clips[3]);
         yield return new WaitForSeconds(1f);
         readyText.text = "2";
+        audioSource.PlayOneShot(baseInteractable.clips[3]);
         yield return new WaitForSeconds(1f);
         readyText.text = "1";
+        audioSource.PlayOneShot(baseInteractable.clips[3]);
         yield return new WaitForSeconds(1f);
         readyText.text = "¡Adelante!";
+        audioSource.PlayOneShot(baseInteractable.clips[4]);
         yield return new WaitForSeconds(1f);
+
+        audioSource.PlayOneShot(baseInteractable.clips[5], 0.35f);
 
         paused = false;
         timerPanel.SetActive(true);
+        buttonRestart.SetActive(true);
+        counterCanvas.SetActive(true);
         imageForm.gameObject.SetActive(true);
         readyText.text = randomCount.ToString();
 
         basketList[0].activated = true;
         basketList[1].activated = true;
         basketList[2].activated = true;
-        counterCanvas.SetActive(true);
         button.doOnce = true;
-    }
 
+        yield return null;
+    }
 
     public void ExitApplication()
     {
@@ -226,5 +284,16 @@ public class GeneratorGame : MonoBehaviour
     public void RestartApplication()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void PlaySoundUI() 
+    {
+        audioSource.PlayOneShot(baseInteractable.clips[6]);
+    }
+    public void StopSoundUI()
+    {
+        StopCoroutine(StartReadyRegresiveCount());
+        if(audioSource.isPlaying)
+            audioSource.Stop();
     }
 }

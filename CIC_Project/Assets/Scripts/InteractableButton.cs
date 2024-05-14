@@ -1,19 +1,23 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
 public class InteractableButton : MonoBehaviour
 {
-    public bool doOnce, cloneButton, doOnceClone;
+    public bool doOnce, cloneButton, playOnlyOnce = true, playOnlyOnce1;
     public Spawner spawner;
     private AudioSource audioSource;
+    public ScriptableBaseInteractable baseInteractable;
 
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
+        audioSource.spatialBlend = 1f;
     }
 
     public void ButtonReciver()
     {
+        playOnlyOnce1 = true;
         if (cloneButton)
         {
             spawner.SetBurstingEnabled(true);
@@ -31,10 +35,20 @@ public class InteractableButton : MonoBehaviour
 
     public void ButtonReciverOff()
     {
-        if (cloneButton)
+        playOnlyOnce1 = false;
+        playOnlyOnce = true;
+    }
+
+    public void AudioButtonReciver()
+    {
+        if (playOnlyOnce1)
         {
-            spawner.SetBurstingEnabled(false);
-            spawner.StartBurst();
+            if (playOnlyOnce)
+            {
+                playOnlyOnce = false;
+                audioSource.PlayOneShot(baseInteractable.clips[0]);
+            }
         }
     }
 }
+

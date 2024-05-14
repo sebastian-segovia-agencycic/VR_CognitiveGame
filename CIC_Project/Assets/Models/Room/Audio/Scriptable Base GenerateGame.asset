@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65bb08a33e9188145b0d7824d3d580c6, type: 3}
+  m_Name: Scriptable Base GenerateGame
+  m_EditorClassIdentifier: 
+  clips:
+  - {fileID: 8300000, guid: 076ad7b02aadb614394bd61ad3ac9c64, type: 3}
+  - {fileID: 8300000, guid: 4ce453fa769344842b153199c1e8629c, type: 3}
+  - {fileID: 8300000, guid: d5ff7586bd7a032478ca3efc40e7cf67, type: 3}
+  - {fileID: 8300000, guid: 008c8b7733d4f404290b487df65c8310, type: 3}
+  - {fileID: 8300000, guid: 4bcf3b0c3a37e24409977c633d321a5f, type: 3}
+  - {fileID: 8300000, guid: fcfbaa415e644c24e9b7fdc50352c752, type: 3}
+  - {fileID: 8300000, guid: 81e110505b208cc4d9d6df76e67da5ec, type: 3}
