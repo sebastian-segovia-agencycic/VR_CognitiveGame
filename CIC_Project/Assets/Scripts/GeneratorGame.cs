@@ -10,7 +10,7 @@ public class GeneratorGame : MonoBehaviour
     public static GeneratorGame Instance;
 
     public int randomColor, randomForm, randomCount, currentCountWin;
-    public int minutesRemaining = 5, counterAttempts = 3;
+    public int minutesRemaining = 5, currentCounterAttempts, counterAttempts = 3;
     
     [SerializeField] private GameObject gamePanel, timerPanel, losePanel, winPanel, buttonMenu, buttonResume, counterCanvas;
     
@@ -32,10 +32,10 @@ public class GeneratorGame : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        ResetUI();
+        ResetGame();
     }
 
-    private void ResetUI()
+    public void ResetGame()
     {
         buttonMenu.SetActive(false);
         buttonResume.SetActive(true);
@@ -46,9 +46,12 @@ public class GeneratorGame : MonoBehaviour
         counterCanvas.SetActive(false);
         winPanel.SetActive(false);
         button.doOnce = false;
+        currentCountWin = 0;
+        currentCounterAttempts = counterAttempts;
         countdownDuration = 60 * minutesRemaining;
         countdownTimer = countdownDuration;
-        counterAtempsText.text = counterAttempts.ToString();
+        counterAtempsText.text = currentCounterAttempts.ToString();
+        basketList[0].counterFormsText.text = currentCountWin.ToString();
     }
 
     private void Start()
@@ -57,17 +60,22 @@ public class GeneratorGame : MonoBehaviour
         StartCoroutine(StartCountdown());
     }
 
-    private void Update()
-    {
-
-    }
-
     public void CalculateFinalGame()
     {
         if (randomCount == currentCountWin)
             GoodEndGame();
         else
             BadEndGame();
+    }
+
+    public void Attempts()
+    {
+        if (currentCounterAttempts <= 0)
+        {
+            currentCounterAttempts = 0;
+            BadEndGame();
+        }
+        counterAtempsText.text = currentCounterAttempts.ToString();
     }
 
     public void InitGaneratedGame()

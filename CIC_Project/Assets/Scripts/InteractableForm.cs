@@ -11,6 +11,7 @@ public class InteractableForm : MonoBehaviour
     public ColorType formColor;
     public Color color;
     private MeshRenderer meshRenderer;
+    public bool canUse = true;
 
     void Start()
     {

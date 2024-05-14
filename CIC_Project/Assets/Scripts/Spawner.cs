@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Tilia.Trackers.PseudoBody;
+using Zinnia.Data.Collection.List;
 
 public class Spawner : MonoBehaviour
 {
@@ -11,14 +13,14 @@ public class Spawner : MonoBehaviour
     public float spawnInterval = 0.5f; // Intervalo entre cada spawn
     public float burstDuration = 2.0f; // Duración del estado de ametralladora
     public float fireRate = 0.5f; // Tiempo mínimo entre cada spawn
-    private bool isBursting = false; // Indica si está en el estado de ametralladora
+    public bool isBursting = false; // Indica si está en el estado de ametralladora
 
     private bool isBurstingEnabled = false; // Controla si el estado de ametralladora está activado o desactivado
     private float lastSpawnTime; // Tiempo del último spawn
     private float lastBurstStartTime; // Tiempo del inicio del último estado de ametralladora
     private List<GameObject> objectPool = new List<GameObject>(); // Piscina de objetos
     public static GameObject poolParent; // Objeto padre que contendrá los clones
-
+    public GameObjectObservableList ignoreCollisionList;
     private void Start()
     {
         // Crear el objeto padre para los clones
@@ -26,11 +28,12 @@ public class Spawner : MonoBehaviour
         poolParent.transform.parent = transform;
 
         // Llenar la piscina de objetos con clones apagados
-        for (int i = 0; i < initialPoolSize; i++)
+        for (int i = 0; i <= initialPoolSize; i++)
         {
-            GameObject obj = Instantiate(prefabsToSpawn[0], poolParent.transform);
+            GameObject obj = Instantiate(prefabsToSpawn[Random.Range(0, prefabsToSpawn.Count)], poolParent.transform);
             obj.SetActive(false);
             objectPool.Add(obj);
+            ignoreCollisionList.AddUnique(obj);
         }
     }
 
@@ -117,11 +120,12 @@ public class Spawner : MonoBehaviour
     // Función para agregar objetos a la piscina
     private void AddObjectsToPool(int count)
     {
-        for (int i = 0; i < count; i++)
+        for (int i = 0; i <= count; i++)
         {
-            GameObject obj = Instantiate(prefabsToSpawn[0], poolParent.transform);
+            GameObject obj = Instantiate(prefabsToSpawn[Random.Range(0, prefabsToSpawn.Count)], poolParent.transform);
             obj.SetActive(false);
             objectPool.Add(obj);
+            ignoreCollisionList.AddUnique(obj);
         }
     }
 }

@@ -1,11 +1,9 @@
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
 public class Basket : MonoBehaviour
 {
-    //InteratableInfo
     public ColorType formColor;
     public FormType formType;
     public ColorType basketColor;
@@ -24,23 +22,28 @@ public class Basket : MonoBehaviour
 
         if (basketSelected)
         {
+            if (!interactable.canUse) return;
+            interactable.canUse = false;
             if (interactable.formType == formType && interactable.formColor == formColor)
                 GeneratorGame.Instance.currentCountWin++;
             else
             {
-                GeneratorGame.Instance.counterAttempts--;
+                GeneratorGame.Instance.currentCounterAttempts--;
                 GeneratorGame.Instance.currentCountWin--;
             }
         }
         else
         {
-            GeneratorGame.Instance.counterAttempts--;
+            GeneratorGame.Instance.currentCounterAttempts--;
             GeneratorGame.Instance.currentCountWin--;
             
+        
         }
-        GeneratorGame.Instance.counterAtempsText.text = GeneratorGame.Instance.counterAttempts.ToString();
+        GeneratorGame.Instance.Attempts();
         counterFormsText.text = GeneratorGame.Instance.currentCountWin.ToString();
-        StartCoroutine(ReturnInteractableToPool(target));
+        GameObject fatherInteractor = target.transform.parent.gameObject;
+        fatherInteractor = fatherInteractor.transform.parent.gameObject;
+        StartCoroutine(ReturnInteractableToPool(fatherInteractor));
     }
 
     private IEnumerator ReturnInteractableToPool(GameObject obj)
