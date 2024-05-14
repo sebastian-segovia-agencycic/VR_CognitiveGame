@@ -14,13 +14,14 @@ public class Spawner : MonoBehaviour
     public float burstDuration = 2.0f; // Duración del estado de ametralladora
     public float fireRate = 0.5f; // Tiempo mínimo entre cada spawn
     public bool isBursting = false; // Indica si está en el estado de ametralladora
-
+    public float maxInstances = 30;
     private bool isBurstingEnabled = false; // Controla si el estado de ametralladora está activado o desactivado
     private float lastSpawnTime; // Tiempo del último spawn
     private float lastBurstStartTime; // Tiempo del inicio del último estado de ametralladora
     private List<GameObject> objectPool = new List<GameObject>(); // Piscina de objetos
     public static GameObject poolParent; // Objeto padre que contendrá los clones
     public GameObjectObservableList ignoreCollisionList;
+
     private void Start()
     {
         // Crear el objeto padre para los clones
@@ -120,7 +121,23 @@ public class Spawner : MonoBehaviour
     // Función para agregar objetos a la piscina
     private void AddObjectsToPool(int count)
     {
-        for (int i = 0; i <= count; i++)
+        // Verificar si agregar estos objetos excederá el límite
+        if (objectPool.Count + count > maxInstances)
+        {
+            // Calcular cuántos objetos adicionales se necesitan eliminar para mantener el límite
+            int excessCount = objectPool.Count + count - 60;
+
+            // Eliminar los objetos adicionales de la piscina
+            for (int i = 0; i < excessCount; i++)
+            {
+                GameObject objToRemove = objectPool[0]; // Tomar el primer objeto de la lista
+                objectPool.RemoveAt(0); // Eliminar el objeto de la lista
+                Destroy(objToRemove); // Destruir el objeto
+            }
+        }
+
+        // Agregar los objetos restantes a la piscina
+        for (int i = 0; i < count; i++)
         {
             GameObject obj = Instantiate(prefabsToSpawn[Random.Range(0, prefabsToSpawn.Count)], poolParent.transform);
             obj.SetActive(false);

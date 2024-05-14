@@ -1,9 +1,16 @@
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
 public class InteractableButton : MonoBehaviour
 {
     public bool doOnce, cloneButton, doOnceClone;
     public Spawner spawner;
+    private AudioSource audioSource;
+
+    private void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
 
     public void ButtonReciver()
     {
