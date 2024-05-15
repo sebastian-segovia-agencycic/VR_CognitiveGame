@@ -31,6 +31,7 @@ public class InteractableButton : MonoBehaviour
                 GeneratorGame.Instance.CalculateFinalGame();
             }
         }
+        AudioButtonReciver();
     }
 
     public void ButtonReciverOff()

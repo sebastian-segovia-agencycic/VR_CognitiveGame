@@ -114,6 +114,7 @@ public class Spawner : MonoBehaviour
     // Función para devolver un objeto a la piscina
     public static void ReturnObjectToPool(GameObject obj)
     {
+        if (obj == null) return;
         obj.transform.position = poolParent.transform.position; // Restablece la posición al objeto padre de la piscina
         obj.SetActive(false); // Desactiva el objeto
     }

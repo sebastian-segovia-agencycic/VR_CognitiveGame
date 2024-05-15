@@ -36,16 +36,16 @@ public class GeneratorGame : MonoBehaviour
         Instance = this;
         gamePanel.SetActive(false);
         timerPanel.SetActive(false);
-        ResetGame();
+        ResetGame(false);
     }
 
-    public void ResetGame()
+    public void ResetGame(bool enabled)
     {
         paused = true;
         buttonMenu.SetActive(false);
         buttonResume.SetActive(true);
         imageForm.gameObject.SetActive(false);
-        gamePanel.SetActive(false);
+        gamePanel.SetActive(enabled);
         timerPanel.SetActive(false);
         losePanel.SetActive(false);
         counterCanvas.SetActive(false);
@@ -60,47 +60,6 @@ public class GeneratorGame : MonoBehaviour
         basketList[0].counterFormsText.text = currentCountWin.ToString();
     }
 
-    public void FinalResetGame()
-    {
-        paused = true;
-        buttonMenu.SetActive(false);
-        buttonResume.SetActive(true);
-        imageForm.gameObject.SetActive(false);
-        gamePanel.SetActive(true);
-        timerPanel.SetActive(false);
-        losePanel.SetActive(false);
-        counterCanvas.SetActive(false);
-        winPanel.SetActive(false);
-        buttonRestart.SetActive(false);
-        button.doOnce = false;
-        currentCountWin = 0;
-        currentCounterAttempts = counterAttempts;
-        countdownDuration = 60 * minutesRemaining;
-        countdownTimer = countdownDuration;
-        counterAtempsText.text = currentCounterAttempts.ToString();
-        basketList[0].counterFormsText.text = currentCountWin.ToString();
-        InitGaneratedGame();
-    }
-    public void FinalResetGame1()
-    {
-        paused = true;
-        buttonMenu.SetActive(false);
-        buttonResume.SetActive(true);
-        imageForm.gameObject.SetActive(false);
-        gamePanel.SetActive(true);
-        timerPanel.SetActive(false);
-        losePanel.SetActive(false);
-        counterCanvas.SetActive(false);
-        winPanel.SetActive(false);
-        buttonRestart.SetActive(false);
-        button.doOnce = false;
-        currentCountWin = 0;
-        currentCounterAttempts = counterAttempts;
-        countdownDuration = 60 * minutesRemaining;
-        countdownTimer = countdownDuration;
-        counterAtempsText.text = currentCounterAttempts.ToString();
-        basketList[0].counterFormsText.text = currentCountWin.ToString();
-    }
     private void Start()
     {
         StartCoroutine(StartCountdown());
@@ -167,7 +126,7 @@ public class GeneratorGame : MonoBehaviour
         basketList[0].activated = false;
         basketList[1].activated = false;
         basketList[2].activated = false;
-        audioSource.PlayOneShot(baseInteractable.clips[1]);
+        audioSource.PlayOneShot(baseInteractable.clips[1],1.5f);
     }
 
     public void GoodEndGame()
