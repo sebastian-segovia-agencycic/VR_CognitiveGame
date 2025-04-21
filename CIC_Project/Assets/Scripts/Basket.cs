@@ -8,7 +8,6 @@ public class Basket : MonoBehaviour
     public FormType formType;
     public ColorType basketColor;
     public TMP_Text counterFormsText;
-    public GameObject canvas;
     public bool basketSelected, activated;
 
     private void OnTriggerEnter(Collider other)
@@ -25,19 +24,22 @@ public class Basket : MonoBehaviour
             if (!interactable.canUse) return;
             interactable.canUse = false;
             if (interactable.formType == formType && interactable.formColor == formColor)
+            {
+                GeneratorGame.Instance.audioSource.PlayOneShot(GeneratorGame.Instance.baseInteractable.clips[8], 1f);
                 GeneratorGame.Instance.currentCountWin++;
+            }
             else
             {
+                GeneratorGame.Instance.audioSource.PlayOneShot(GeneratorGame.Instance.baseInteractable.clips[7], 1f);
                 GeneratorGame.Instance.currentCounterAttempts--;
                 GeneratorGame.Instance.currentCountWin--;
             }
         }
         else
         {
+            GeneratorGame.Instance.audioSource.PlayOneShot(GeneratorGame.Instance.baseInteractable.clips[7], 1f);
             GeneratorGame.Instance.currentCounterAttempts--;
             GeneratorGame.Instance.currentCountWin--;
-            
-        
         }
         GeneratorGame.Instance.Attempts();
         counterFormsText.text = GeneratorGame.Instance.currentCountWin.ToString();

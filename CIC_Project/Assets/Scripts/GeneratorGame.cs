@@ -83,7 +83,7 @@ public class GeneratorGame : MonoBehaviour
         counterAtempsText.text = currentCounterAttempts.ToString();
     }
 
-    public void InitGaneratedGame()
+    public void InitGame()
     {
         randomColor = Random.Range((int)ColorType.Yellow, (int)ColorType.Red);
         randomForm = Random.Range((int)FormType.Cube, (int)FormType.Sphere);
